@@ -5,12 +5,13 @@ type PropsType = {
     track1: string
     track2?: number
     tasks: Array<TasksType>
-    removeTask: (task: number) => void
+    removeTask: (task: string) => void
     changeFilter: (value: ValuesType) => void
+    addTask: () => void
 }
 
 type TasksType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -21,7 +22,7 @@ export const TodoList = (props: PropsType) => {
             <h3>{ props.track1 }</h3>
             <div>
                 <input />
-                <button>+</button>
+                <button onClick={props.addTask}>+</button>
             </div>
             <ul>
                 { props.tasks.map((el) => {
