@@ -23,10 +23,11 @@ function App() {
         setTasks(filteredTasks)
     }
 
-    const addTask = () => {
-        let task = { id: v1(), title: "TEST", isDone: true }
+    const addTask = (title: string) => {
+        let task = { id: v1(), title: title, isDone: true }
         let newTasks = [ task, ...tasks ]
         setTasks(newTasks)
+
     }
 
     let tasksForTodolist = tasks;
