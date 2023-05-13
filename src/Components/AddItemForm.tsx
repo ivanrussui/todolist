@@ -1,5 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import Button from '@mui/material/Button/Button';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import Fingerprint from '@mui/icons-material/Fingerprint';
+import AddBox from '@mui/icons-material/AddBox';
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void
@@ -29,18 +32,27 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
   }
 
+  const muiStyles = {
+    width: '35px',
+    height: '35px',
+  }
 
   return (
       <div>
-        <input onChange={onChangeHandler}
-               value={title}
-               onKeyDown={onKeyDownHandler}
-               className={error ? 'error' : ''}
+        <TextField onChange={onChangeHandler}
+                   onKeyDown={onKeyDownHandler}
+                   value={title}
+                   variant="outlined"
+                   error={!!error}
+                   label={'Enter text'}
+                   helperText={error}
         />
-        <Button variant="contained" color={'primary'}
-                style={{maxHeight: '30px', minWidth: '30px', marginLeft: '3px'}}
-                size="small" onClick={addItemHandler}>+</Button>
-        {error && <div className={'errorMessage'}>{error}</div>}
+        <IconButton aria-label="fingerprint" color="primary" onClick={addItemHandler}>
+          <Fingerprint style={muiStyles} />
+        </IconButton>
+        {/*<IconButton color={'primary'} onClick={addItemHandler}>*/}
+        {/*  <AddBox/>*/}
+        {/*</IconButton>*/}
       </div>
   );
 };
