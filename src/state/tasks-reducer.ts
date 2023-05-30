@@ -1,7 +1,9 @@
 import {TasksStateType} from "../App";
+import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 
 type ActionType = RemoveTaskActionType | AddTaskActionType |
-    changeTaskStatusActionType | changeTaskTitleActionType
+    changeTaskStatusActionType | changeTaskTitleActionType |
+    AddTodolistActionType | RemoveTodolistActionType
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -44,17 +46,17 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
         case "CHANGE-TASK-STATUS":
             // map
             return {
-               ...state, [action.id]: state[action.id]
+                ...state, [action.id]: state[action.id]
                     .map(task => task.id === action.taskId ?
                         {...task, checked: action.checked} : task)
             }
 
-            // find попробуй позже дописать
-            // let taskNew = {...state, [action.id]: state[action.id]
-            //         .find(task => {task.id === action.taskId})}
-            // if (taskNew) {
-            //         // taskNew.isDone = action.checked
-            //     }
+        // find попробуй позже дописать
+        // let taskNew = {...state, [action.id]: state[action.id]
+        //         .find(task => {task.id === action.taskId})}
+        // if (taskNew) {
+        //         // taskNew.isDone = action.checked
+        //     }
 
         case "CHANGE-TASK-TITLE":
             return {
@@ -62,6 +64,18 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                     .map(task => task.id === action.taskId ?
                         {...task, title: action.title} : task)
             }
+        case "ADD-TODOLIST":
+            return {
+                ...state, [action.todolistId]: []
+            }
+        case "REMOVE-TODOLIST":
+            let copyState = {...state}
+            delete copyState[action.id]
+            return copyState
+
+            // через деструктуризацию
+            // let {[action.id]: [], ...rest} = state
+            // return rest
         default:
             throw new Error('I don\'t understand this type')
     }
