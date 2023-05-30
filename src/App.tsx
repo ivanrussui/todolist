@@ -41,11 +41,6 @@ const App = () => {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
-    // console.log({...tasks, [todolistID1]: tasks[todolistID1]
-    //         .find(t => {t.id === todolistID1})} )
-    // console.log({...tasks}, {todolistID1: {...tasks[todolistID1]}})
-    // let todolistTasks = tasks[todolistID1]
-    // console.log(todolistTasks)
 
 //  функции тудулистов
     const removeTodolist = (id: string) => {

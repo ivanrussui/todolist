@@ -1,7 +1,7 @@
-import {FilterValuesType, TasksStateType} from "../App";
-import {v1} from "uuid";
+import {TasksStateType} from "../App";
 
-type ActionType = RemoveTaskActionType | AddTaskActionType | changeTaskStatusActionType
+type ActionType = RemoveTaskActionType | AddTaskActionType |
+    changeTaskStatusActionType | changeTaskTitleActionType
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -22,6 +22,13 @@ export type changeTaskStatusActionType = {
     checked: boolean
 }
 
+export type changeTaskTitleActionType = {
+    type: 'CHANGE-TASK-TITLE',
+    id: string,
+    taskId: string,
+    title: string
+}
+
 export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
@@ -35,32 +42,25 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                 ...state, [action.id]: [task, ...state[action.id]]
             }
         case "CHANGE-TASK-STATUS":
-            // // достанем нужный массив по todolistId
-            // let todolistTasks = tasks[todolistId]
-            //
-            // // найдем нужную таксу
-            // let task = todolistTasks.find(task => task.id === id)
-            //
-            // // изменим таксу, если она нашлась
-            // if (task) {
-            //     task.isDone = isDone
-            //
-            //     // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-            //     setTasks({...tasks})
-            // }
-            // let todolistTasks = [action.id]
-            // let newTask = [...todolistTasks].find()
-            // debugger
+            // map
+            return {
+               ...state, [action.id]: state[action.id]
+                    .map(task => task.id === action.taskId ?
+                        {...task, checked: action.checked} : task)
+            }
 
+            // find попробуй позже дописать
             // let taskNew = {...state, [action.id]: state[action.id]
             //         .find(task => {task.id === action.taskId})}
-            // console.log(taskNew)
             // if (taskNew) {
             //         // taskNew.isDone = action.checked
             //     }
 
+        case "CHANGE-TASK-TITLE":
             return {
-                ...state
+                ...state, [action.id]: state[action.id]
+                    .map(task => task.id === action.taskId ?
+                        {...task, title: action.title} : task)
             }
         default:
             throw new Error('I don\'t understand this type')
@@ -75,7 +75,10 @@ export const addTaskAC = (title: string, todolistId: string): AddTaskActionType 
     return {type: 'ADD-TASK', title, id: todolistId} as const
 }
 
-export const changeTaskStatusAC = (
-    taskId: string, checked: boolean, todolistId: string): changeTaskStatusActionType => {
+export const changeTaskStatusAC = (taskId: string, checked: boolean, todolistId: string): changeTaskStatusActionType => {
     return {type: 'CHANGE-TASK-STATUS', taskId, checked, id: todolistId} as const
+}
+
+export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string): changeTaskTitleActionType => {
+    return {type: 'CHANGE-TASK-TITLE', taskId, title, id: todolistId} as const
 }
