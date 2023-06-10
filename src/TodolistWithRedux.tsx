@@ -68,6 +68,7 @@ export function TodolistWithRedux(props: PropsType) {
                 {tasks.map((el) => {
                     const removeTaskHandler = () => dispatch(removeTaskAC(el.id, props.todolistId))
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        // debugger
                         let newIsDoneValue = e.currentTarget.checked;
                         dispatch(changeTaskStatusAC(el.id, newIsDoneValue, props.todolistId))
                     }

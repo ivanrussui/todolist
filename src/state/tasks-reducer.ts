@@ -52,7 +52,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 ...state,
                 [action.id]: state[action.id]
                     .map(task => task.id === action.taskId ?
-                        {...task, checked: action.checked} : task)
+                        {...task, isDone: action.checked} : task)
             }
 
         // find попробуй позже дописать
