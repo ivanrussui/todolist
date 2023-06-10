@@ -31,7 +31,9 @@ export type changeTaskTitleActionType = {
     title: string
 }
 
-export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
+const initialState: TasksStateType = {}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
             return {
@@ -76,8 +78,8 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
             // через деструктуризацию
             // let {[action.id]: [], ...rest} = state
             // return rest
-        default: return state
-            // throw new Error('I don\'t understand this type')
+        default:
+            return state
     }
 }
 
