@@ -1,3 +1,4 @@
+import { v1 } from "uuid";
 import {TasksStateType} from "../App";
 import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 
@@ -41,14 +42,15 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                     .filter(task => task.id != action.taskId)
             }
         case "ADD-TASK":
-            let task = {id: action.id, title: action.title, isDone: false}
+            let task = {id: v1(), title: action.title, isDone: false}
             return {
                 ...state, [action.id]: [task, ...state[action.id]]
             }
         case "CHANGE-TASK-STATUS":
             // map
             return {
-                ...state, [action.id]: state[action.id]
+                ...state,
+                [action.id]: state[action.id]
                     .map(task => task.id === action.taskId ?
                         {...task, checked: action.checked} : task)
             }
