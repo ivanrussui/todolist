@@ -76,8 +76,8 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
             // через деструктуризацию
             // let {[action.id]: [], ...rest} = state
             // return rest
-        default:
-            throw new Error('I don\'t understand this type')
+        default: return state
+            // throw new Error('I don\'t understand this type')
     }
 }
 
