@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { FilterValuesType } from './App';
 import './App.css';
 import { AddItemForm } from './Components/AddItemForm';
@@ -30,9 +30,9 @@ export function TodolistWithRedux(props: PropsType) {
 
     const dispatch = useDispatch()
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, props.todolistId))
-    }
+    }, [])
 
     const removeTodolist = () => {
         let action = removeTodolistAC(props.todolistId)
@@ -91,8 +91,8 @@ export function TodolistWithRedux(props: PropsType) {
                     );
                 })}
             </div>
-            <div>
-                <Button color={'success'}
+            <div style={{marginTop: '5px', display: 'flex', gap: '5px'}}>
+            <Button color={'success'}
                         variant={props.filter === 'all' ? 'contained' : 'outlined'}
                         onClick={onAllClickHandler}>All
                 </Button>

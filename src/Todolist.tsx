@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { FilterValuesType } from './App';
 import './App.css';
 import { AddItemForm } from './Components/AddItemForm';
@@ -28,11 +28,11 @@ type PropsType = {
   changeTodolistName: (todolistId: string, updateTitle: string) => void
 }
 
-export const TodoList = (props: PropsType) => {
+export const Todolist = (props: PropsType) => {
 
-  const addTask = (title: string) => {
+  const addTask = useCallback((title: string) => {
     props.addTask(title, props.todolistId)
-  }
+  }, [])
 
   const removeTaskHandler = (id: string) => {
     props.removeTask(id, props.todolistId)
@@ -89,7 +89,7 @@ export const TodoList = (props: PropsType) => {
           );
         })}
       </div>
-      <div>
+      <div style={{marginTop: '5px', display: 'flex', gap: '5px'}}>
         <Button color={'success'}
                 variant={props.filter === 'all' ? 'contained' : 'outlined'}
                 onClick={() => changeFilterHandler('all', props.todolistId)}>All

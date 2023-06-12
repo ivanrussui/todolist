@@ -1,5 +1,5 @@
 import './App.css';
-import { TasksType, TodoList } from './TodoList';
+import { TasksType, Todolist } from './Todolist';
 import { v1 } from 'uuid';
 import { AddItemForm } from './Components/AddItemForm';
 import { ButtonAppBar } from './Components/ButtonAppBar';
@@ -16,6 +16,7 @@ import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
 import { TodolistWithRedux } from './TodolistWithRedux';
+import { useCallback } from 'react';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -41,10 +42,10 @@ const AppWithRedux = () => {
         dispatch(action)
     }
 
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
-    }
+    }, [])
 
     const changeTodolistName = (todolistId: string, newValue: string) => {
         const action = changeTodolistTitleAC(todolistId, newValue)
@@ -99,19 +100,33 @@ const AppWithRedux = () => {
                             // }
                             return <Grid item key={todolist.id}>
                                 <Paper elevation={5} style={{ padding: '10px' }}>
-                                    <TodolistWithRedux
-                                                       todolistId={todolist.id}
-                                                       title={todolist.title}
-                                                       filter={todolist.filter}
-                                                       // tasks={tasksForTodolist}
-                                                       // removeTask={removeTask}
-                                                       // changeFilter={changeFilter}
-                                                       // addTask={addTask}
-                                                       // changeTaskStatus={changeTaskStatus}
-                                                       // removeTodolist={removeTodolist}
-                                                       // changeTaskName={changeTaskName}
-                                                       // changeTodolistName={changeTodolistName}
+                                    <Todolist
+                                        todolistId={todolist.id}
+                                        title={todolist.title}
+                                        filter={todolist.filter}
+                                        tasks={tasks[todolist.id]}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        addTask={addTask}
+                                        changeTaskStatus={changeTaskStatus}
+                                        removeTodolist={removeTodolist}
+                                        changeTaskName={changeTaskName}
+                                        changeTodolistName={changeTodolistName}
                                     />
+                                    {/*<TodolistWithRedux*/}
+                                    {/*                   todolistId={todolist.id}*/}
+                                    {/*                   title={todolist.title}*/}
+                                    {/*                   filter={todolist.filter}*/}
+                                    {/* ниже по сути не нужны, ждет 3 параметра  */}
+                                    {/*                   // tasks={tasksForTodolist}*/}
+                                    {/*                   // removeTask={removeTask}*/}
+                                    {/*                   // changeFilter={changeFilter}*/}
+                                    {/*                   // addTask={addTask}*/}
+                                    {/*                   // changeTaskStatus={changeTaskStatus}*/}
+                                    {/*                   // removeTodolist={removeTodolist}*/}
+                                    {/*                   // changeTaskName={changeTaskName}*/}
+                                    {/*                   // changeTodolistName={changeTodolistName}*/}
+                                    {/*/>*/}
                                 </Paper>
                             </Grid>
                         })
