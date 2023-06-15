@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { changeTodolistFilterAC } from './state/todolists-reducer';
 
 export type TasksType = {
   id: string
@@ -28,9 +29,10 @@ type PropsType = {
   changeTodolistName: (todolistId: string, updateTitle: string) => void
 }
 
-export const Todolist = (props: PropsType) => {
+export const Todolist = React.memo((props: PropsType) => {
+    console.log("Todolist called")
 
-  const addTask = useCallback((title: string) => {
+    const addTask = useCallback((title: string) => {
     props.addTask(title, props.todolistId)
   }, [])
 
@@ -52,12 +54,21 @@ export const Todolist = (props: PropsType) => {
   }
 
   const changeTaskNameHandler = (id: string, newValue: string) => {
-    props.changeTaskName(props.todolistId, id, newValue)
+    props.changeTaskName(id, newValue, props.todolistId)
   }
 
   const changeTodolistNameHandler = (newValue: string) => {
     props.changeTodolistName(props.todolistId, newValue)
   }
+
+   let tasksForTodolist = props.tasks
+
+    if (props.filter === "active") {
+        tasksForTodolist = props.tasks.filter(task => !task.isDone)
+    }
+    if (props.filter === "completed") {
+        tasksForTodolist = props.tasks.filter(task => task.isDone)
+    }
 
   return (
     <div>
@@ -71,7 +82,8 @@ export const Todolist = (props: PropsType) => {
       </div>
       <AddItemForm addItem={addTask} />
       <div>
-        {props.tasks.map((el) => {
+        {/*{props.tasks.map((el) => {*/}
+        {tasksForTodolist.map((el) => {
           return (
             <div key={el.id} className={el.isDone ? 'isDone' : ''}>
               <Checkbox
@@ -105,4 +117,4 @@ export const Todolist = (props: PropsType) => {
       </div>
     </div>
   )
-}
+})

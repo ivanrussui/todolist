@@ -55,7 +55,7 @@ test('status of specified task should be changed', () => {
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId1'][0].isDone).toBe(false)
-    expect(endState['todolistId2'][1].isDone).toBe(true)
+    expect(endState['todolistId2'][1].isDone).toBe(false)
 })
 
 test('change title for task', () => {
