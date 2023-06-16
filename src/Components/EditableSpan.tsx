@@ -7,6 +7,7 @@ type EditableSpanPropsType = {
 }
 
 export const EditableSpan = (props: EditableSpanPropsType) => {
+    console.log('EditableSpan called')
   const [ newValue, setNewValue ] = useState(props.value)
   const [ editMode, setEditMode ] = useState(false)
 
@@ -16,7 +17,6 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
 
   const renameTask = () => {
     props.onChange(newValue.trim())
-
   }
 
   const editHandler = () => {

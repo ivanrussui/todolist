@@ -34,14 +34,14 @@ export const Todolist = React.memo((props: PropsType) => {
 
     const addTask = useCallback((title: string) => {
     props.addTask(title, props.todolistId)
-  }, [])
+  }, [props.addTask, props.todolistId])
+
+    const changeFilterHandler = useCallback((value: FilterValuesType, todolistId: string) => {
+        props.changeFilter(value, todolistId)
+    },[props.changeFilter, props.todolistId])
 
   const removeTaskHandler = (id: string) => {
     props.removeTask(id, props.todolistId)
-  }
-
-  const changeFilterHandler = (value: FilterValuesType, todolistId: string) => {
-    props.changeFilter(value, todolistId)
   }
 
   const changeCheckBox = (id: string, e: ChangeEvent<HTMLInputElement>) => {

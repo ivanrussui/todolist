@@ -88,8 +88,9 @@ const AppWithRedux = () => {
                 <Grid container spacing={3}>
                     {
                         todolists.map(todolist => {
-                            let allTodolistTasks = tasks[todolist.id]
-                            let tasksForTodolist = allTodolistTasks
+                            // let allTodolistTasks = tasks[todolist.id]
+                            // let tasksForTodolist = allTodolistTasks
+                            let tasksForTodolist = tasks[todolist.id]
 
                             // if (todolist.filter === "active") {
                             //     tasksForTodolist = allTodolistTasks.filter(task => !task.isDone)
