@@ -1,6 +1,5 @@
 import './App.css';
 import { TasksType, Todolist } from './Todolist';
-import { v1 } from 'uuid';
 import { AddItemForm } from './Components/AddItemForm';
 import { ButtonAppBar } from './Components/ButtonAppBar';
 import Container from '@mui/material/Container';
@@ -15,7 +14,6 @@ import {
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { TodolistWithRedux } from './TodolistWithRedux';
 import { useCallback } from 'react';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
@@ -45,12 +43,12 @@ const AppWithRedux = () => {
     const removeTodolist = useCallback((id: string) => {
         const action = removeTodolistAC(id)
         dispatch(action)
-    },[])
+    }, [])
 
     const changeTodolistName = useCallback((todolistId: string, newValue: string) => {
         const action = changeTodolistTitleAC(todolistId, newValue)
         dispatch(action)
-    },[])
+    }, [])
 
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         const action = changeTodolistFilterAC(todolistId, value)
@@ -61,22 +59,22 @@ const AppWithRedux = () => {
     const removeTask = useCallback((id: string, todolistId: string) => {
         const action = removeTaskAC(id, todolistId)
         dispatch(action)
-    },[])
+    }, [])
 
     const addTask = useCallback((title: string, todolistId: string) => {
         const action = addTaskAC(title, todolistId)
         dispatch(action)
-    },[])
+    }, [])
 
     const changeTaskStatus = useCallback((id: string, isDone: boolean, todolistId: string) => {
         const action = changeTaskStatusAC(id, isDone, todolistId)
         dispatch(action)
-    },[])
+    }, [])
 
     const changeTaskName = useCallback((id: string, newValue: string, todolistId: string) => {
         const action = changeTaskTitleAC(id, newValue, todolistId)
         dispatch(action)
-    },[])
+    }, [])
 
     return (
         <div className="App">
